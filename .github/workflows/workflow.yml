@@ -2,8 +2,7 @@ name: CI
 
 on:
   push:
-    branches:
-      - develop
+    branches: [ "main", "develop" ]
 
 env:
   API_IMAGE: dommin/starter-api:${{ github.sha }}
