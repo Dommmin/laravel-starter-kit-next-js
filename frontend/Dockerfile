@@ -1,10 +1,8 @@
-FROM node:20.11 AS base
+FROM node:20-alpine AS base
 
 WORKDIR /usr/src
 
 COPY ./frontend/package*.json ./
-
-RUN npm install
 
 COPY ./frontend .
 
@@ -13,6 +11,7 @@ EXPOSE 3000
 CMD ["npm", "run", "dev"]
 
 FROM base AS build
+RUN npm install
 RUN npm run build
 
 FROM nginx:alpine AS prod
