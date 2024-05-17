@@ -8,7 +8,7 @@ import AuthSessionStatus from '../components/AuthSessionStatus.jsx';
 import { useRouter } from 'next/navigation';
 
 export default function ForgotPassword() {
-    const router = useRouter();
+   const router = useRouter();
    const { forgotPassword, isFetching, user } = useAuth({
       middleware: 'guest',
       redirectIfAuthenticated: '/',
