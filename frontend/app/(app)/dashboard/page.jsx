@@ -50,7 +50,7 @@ const Page = () => {
       });
 
       axios
-         .post('/api/images', formData, {
+         .post('/api/v1/images', formData, {
             headers: {
                'Content-Type': 'multipart/form-data',
             },

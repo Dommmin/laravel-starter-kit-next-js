@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use Illuminate\Support\Facades\Storage;
@@ -20,8 +22,8 @@ class FileService
             if ($file->isValid()) {
                 $extension = $file->getClientOriginalExtension();
                 $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                $fileName = $originalName.'-'.uniqid().'.'.$extension;
-                $path = $directory === '' ? $fileName : $directory.'/'.$fileName;
+                $fileName = $originalName . '-' . uniqid() . '.' . $extension;
+                $path = $directory === '' ? $fileName : $directory . '/' . $fileName;
 
                 Storage::disk($disk)->put($path, $file->get(), 'public');
 

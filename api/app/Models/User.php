@@ -8,7 +8,6 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Log;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
@@ -47,10 +46,9 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function getTwoFactorEnabledAttribute(): bool
     {
-        Log::info($this->two_factor_confirmed_at);
-
         return Features::enabled(Features::twoFactorAuthentication())
-            && null !== $this->two_factor_secret;
+            && $this->hasAttribute('two_factor_secret')
+            && $this->two_factor_secret !== null;
     }
 
     public function createProfilePhotoUrl(): string
@@ -66,6 +64,11 @@ class User extends Authenticatable implements MustVerifyEmail
             . '?s=200&d=https://s3.amazonaws.com/laracasts/images/forum/avatars/default-avatar-'
             . $integerToUse
             . '.png';
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->hasRole('admin');
     }
 
     /**
