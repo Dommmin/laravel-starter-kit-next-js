@@ -19,6 +19,12 @@ if [ ! -f "$ENV_FILE" ]; then
     exit 1
 fi
 
+PROJECT_ENV_FILE="$BASEDIR/api/.env"
+
+if [ ! -f "$PROJECT_ENV_FILE" ]; then
+    cd api && cp .env.example .env
+fi
+
 eval "$(grep ^DOCKER_PREFIX= $ENV_FILE)"
 eval "$(grep ^DBNAME= $ENV_FILE)"
 eval "$(grep ^DOCKER_IP= $ENV_FILE)"
@@ -55,32 +61,38 @@ echo "${BOLD}${RED}-------------------------------------------------------------
 echo -e "${BOLD}${YELLOW}Instalacja Composera${RESET}\n"
 docker exec -it -u $USER "${DOCKER_PREFIX}_api" composer install --no-scripts
 
+## Instalacja zależności npm
+#echo "${BOLD}${RED}--------------------------------------------------------------------------------${RESET}"
+#echo -e "${BOLD}${YELLOW}Instalacja zależności npm${RESET}\n"
+#docker exec -it "${DOCKER_PREFIX}_frontend" npm install
+
 # Uruchomienie migracji
 echo "${BOLD}${RED}--------------------------------------------------------------------------------${RESET}"
 echo -e "${BOLD}${YELLOW}Uruchomienie migracji${RESET}\n"
 docker exec -u root "$DOCKER_PREFIX"_api bash migration.sh
 
-# CS Fixer
-echo "${BOLD}${RED}--------------------------------------------------------------------------------${RESET}"
-echo -e "${BOLD}${YELLOW}CS Fixer${RESET}\n"
-docker exec -it "$DOCKER_PREFIX"_api composer pint
+## CS Fixer
+#echo "${BOLD}${RED}--------------------------------------------------------------------------------${RESET}"
+#echo -e "${BOLD}${YELLOW}CS Fixer${RESET}\n"
+#docker exec -it -u root "$DOCKER_PREFIX"_api chown $USER:$USER ./vendor/bin/pint
+#docker exec -it "$DOCKER_PREFIX"_api composer pint
 
 # Insights
 echo "${BOLD}${RED}--------------------------------------------------------------------------------${RESET}"
 echo -e "${BOLD}${YELLOW}Insights${RESET}\n"
 docker exec -it "$DOCKER_PREFIX"_api php artisan insights --fix
 
-# Instalacja zależności npm
-echo "${BOLD}${RED}--------------------------------------------------------------------------------${RESET}"
-echo -e "${BOLD}${YELLOW}Instalacja zależności npm${RESET}\n"
-docker exec -it "${DOCKER_PREFIX}_frontend" npm install
-
 # Lint
 echo "${BOLD}${RED}--------------------------------------------------------------------------------${RESET}"
 echo -e "${BOLD}${YELLOW}ESLINT${RESET}\n"
 docker exec -it "$DOCKER_PREFIX"_frontend npm run lint:fix
 
+# Prettier
+echo "${BOLD}${RED}--------------------------------------------------------------------------------${RESET}"
+echo -e "${BOLD}${YELLOW}PRETTIER${RESET}\n"
+docker exec -it "$DOCKER_PREFIX"_frontend npm run format:fix
+
 # Panel
 echo "${BOLD}${RED}--------------------------------------------------------------------------------${RESET}"
-echo "${YELLOW}API jest dostępne pod adresem: ${BOLD}${GREEN}http://localhost:8000/api${RESET}"
+echo "${YELLOW}API jest dostępne pod adresem: ${BOLD}${GREEN}http://localhost:3000/api${RESET}"
 echo "${YELLOW}Strona jest dostępna pod adresem: ${BOLD}${GREEN}http://localhost:3000${RESET}"

@@ -2,21 +2,21 @@
 
 import Wrapper from '../../ui/Wrapper.jsx';
 import { useState } from 'react';
-import { Reorder } from 'framer-motion';
+// import { Reorder } from 'framer-motion';
 import UploadItem from '../..//ui/UploadItem.jsx';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+// import { toast, ToastContainer } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 import axios from '../../lib/axios.js';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 
 const Page = () => {
    const [images, setImages] = useState([]);
-   const router = useRouter();
+   // const router = useRouter();
 
    const handleDroppedFiles = (files) => {
       Array.from(files).forEach((file) => {
          if (!file.type.startsWith('image/')) {
-            toast.error(`"${file.name}" is not an image.`);
+            // toast.error(`"${file.name}" is not an image.`);
             return;
          }
 
@@ -24,7 +24,7 @@ const Page = () => {
             if (!prevImages.some((image) => image.name === file.name)) {
                return [...prevImages, file];
             } else {
-               toast.error(`"${file.name}" already exists in the list.`);
+               // toast.error(`"${file.name}" already exists in the list.`);
                return prevImages;
             }
          });
@@ -39,7 +39,7 @@ const Page = () => {
       e.preventDefault();
 
       if (images.length === 0) {
-         toast.error('Please add at least one image.');
+         // toast.error('Please add at least one image.');
          return;
       }
 
@@ -56,7 +56,7 @@ const Page = () => {
             },
          })
          .then(() => {
-            router.push('/');
+            // router.push('/');
          })
          .catch((err) => {
             console.log(err);
@@ -65,7 +65,7 @@ const Page = () => {
 
    return (
       <Wrapper>
-         <ToastContainer position={'bottom-right'} autoClose={1500} />
+         {/*<ToastContainer position={'bottom-right'} autoClose={1500} />*/}
          <div>
             <label
                htmlFor="image"
@@ -89,13 +89,13 @@ const Page = () => {
             />
          </div>
 
-         <Reorder.Group values={images} onReorder={setImages} axis="y" className="mt-4 space-y-4">
-            {images.map((image, index) => (
-               <Reorder.Item key={image.name} value={image} className="cursor-grab">
-                  <UploadItem image={image} key={image.name} onRemove={() => removeImage(index)} />
-               </Reorder.Item>
-            ))}
-         </Reorder.Group>
+         {/*<Reorder.Group values={images} onReorder={setImages} axis="y" className="mt-4 space-y-4">*/}
+         {/*   {images.map((image, index) => (*/}
+         {/*      <Reorder.Item key={image.name} value={image} className="cursor-grab">*/}
+         {/*         <UploadItem image={image} key={image.name} onRemove={() => removeImage(index)} />*/}
+         {/*      </Reorder.Item>*/}
+         {/*   ))}*/}
+         {/*</Reorder.Group>*/}
          <div className="flex justify-center items-center mt-4">
             <button onClick={handleUpload} className="btn text-white w-full btn-info ">
                Upload

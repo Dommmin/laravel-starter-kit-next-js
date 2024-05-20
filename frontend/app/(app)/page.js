@@ -1,39 +1,39 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { MeiliSearch } from 'meilisearch';
-import { useDebounce } from 'use-debounce';
+// import { MeiliSearch } from 'meilisearch';
+// import { useDebounce } from 'use-debounce';
 import Image from 'next/image';
 import Wrapper from '../ui/Wrapper';
 
-const client = new MeiliSearch({
-   host: 'http://127.0.0.1:7700/',
-   apiKey: 'masterKey',
-});
+// const client = new MeiliSearch({
+//    host: 'http://127.0.0.1:7700/',
+//    apiKey: 'masterKey',
+// });
 
-const index = client.index('posts');
+// const index = client.index('posts');
 
 export default function Home() {
    const [searchQuery, setSearchQuery] = useState('');
-   const [debouncedSearchQuery] = useDebounce(searchQuery, 500);
+   // const [debouncedSearchQuery] = useDebounce(searchQuery, 500);
    const [posts, setPosts] = useState([]);
    const [isLoading, setIsLoading] = useState(true);
 
    const fetchPosts = () => {
-      index
-         .search(debouncedSearchQuery)
-         .then((response) => {
-            setPosts(response.hits);
-         })
-         .catch((error) => {
-            console.error('Error:', error);
-         })
-         .finally(() => setIsLoading(false));
+      // index
+      //    .search(debouncedSearchQuery)
+      //    .then((response) => {
+      //       setPosts(response.hits);
+      //    })
+      //    .catch((error) => {
+      //       console.error('Error:', error);
+      //    })
+      //    .finally(() => setIsLoading(false));
    };
 
    useEffect(() => {
       fetchPosts();
-   }, [debouncedSearchQuery]);
+   }, []);
 
    // const {
    //   data,

@@ -57,8 +57,8 @@ export default function TwoFactorAuthenticationForm({ className = '', user }) {
                {user.two_factor_confirmed_at && !confirming
                   ? 'You have enabled two factor authentication.'
                   : twoFactorEnabled && confirming
-                    ? 'Finish enabling two factor authentication.'
-                    : 'You have not enabled two factor authentication.'}
+                  ? 'Finish enabling two factor authentication.'
+                  : 'You have not enabled two factor authentication.'}
             </h2>
 
             <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">

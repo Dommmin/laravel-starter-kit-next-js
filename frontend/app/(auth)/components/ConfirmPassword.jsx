@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
-import axios from '../lib/axios.js';
-import DialogModal from './/DialogModal.jsx';
-import InputError from './/InputError.jsx';
-import SecondaryButton from './/SecondaryButton.jsx';
-import SuccessButton from './/SuccessButton.jsx';
-import { useAuth } from '../hooks/auth.js';
+import axios from '../../lib/axios.js';
+import DialogModal from '../../ui/DialogModal.jsx';
+import InputError from '../../ui/InputError.jsx';
+import SecondaryButton from '../../ui/SecondaryButton.jsx';
+import SuccessButton from '../../ui/SuccessButton.jsx';
+import { useAuth } from '../../hooks/auth.js';
 
 export default function ConfirmPassword({
    title = 'Confirm Password',
@@ -22,7 +22,7 @@ export default function ConfirmPassword({
    const { refetch } = useAuth();
 
    const startConfirmingPassword = () => {
-      axios.get('/user/confirmed-password-status').then((response) => {
+      axios.get('/api/v1/user/confirmed-password-status').then((response) => {
          if (response.data.confirmed) {
             onConfirm();
          } else {
@@ -37,7 +37,7 @@ export default function ConfirmPassword({
       setErrors({});
 
       axios
-         .post('/user/confirm-password', {
+         .post('/api/v1/user/confirm-password', {
             password: password,
          })
          .then(() => {
@@ -50,7 +50,7 @@ export default function ConfirmPassword({
             refetch();
          })
          .catch((error) => {
-            console.log(error);
+            console.error(error);
             setPassword(password);
             setErrors(error.response.data.errors);
             setProcessing(false);
@@ -82,7 +82,7 @@ export default function ConfirmPassword({
                            ref={passwordInput}
                            value={password}
                            type="password"
-                           className="input-custom max-w-lg"
+                           className="input input-bordered max-w-lg"
                            placeholder="Password"
                            autoComplete="current-password"
                            onKeyUp={(event) => {
