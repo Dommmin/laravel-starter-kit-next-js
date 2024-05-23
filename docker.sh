@@ -61,10 +61,10 @@ echo "${BOLD}${RED}-------------------------------------------------------------
 echo -e "${BOLD}${YELLOW}Instalacja Composera${RESET}\n"
 docker exec -it -u $USER "${DOCKER_PREFIX}_api" composer install --no-scripts --no-interaction
 
-## Instalacja zależności npm
-#echo "${BOLD}${RED}--------------------------------------------------------------------------------${RESET}"
-#echo -e "${BOLD}${YELLOW}Instalacja zależności npm${RESET}\n"
-#docker exec -it "${DOCKER_PREFIX}_frontend" npm install
+# Instalacja zależności npm
+echo "${BOLD}${RED}--------------------------------------------------------------------------------${RESET}"
+echo -e "${BOLD}${YELLOW}Instalacja zależności npm${RESET}\n"
+docker exec -it "${DOCKER_PREFIX}_frontend" npm install
 
 # Uruchomienie migracji
 echo "${BOLD}${RED}--------------------------------------------------------------------------------${RESET}"
