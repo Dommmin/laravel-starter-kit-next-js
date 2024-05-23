@@ -16,7 +16,7 @@ export default function UpdateProfileInformation({ className = '', user, resendE
       setProcessing(true);
 
       axios
-         .put('/user/profile-information', data)
+         .put('/api/v1/user/profile-information', data)
          .then(() => {
             setRecentlySuccessful(true);
             refetchUser();
@@ -47,7 +47,7 @@ export default function UpdateProfileInformation({ className = '', user, resendE
                   </div>
                   <input
                      id="name"
-                     className="input-custom max-w-lg"
+                     className="input input-bordered max-w-lg"
                      value={data.name}
                      onChange={(e) => setData({ ...data, name: e.target.value })}
                      autoComplete="name"
@@ -65,7 +65,7 @@ export default function UpdateProfileInformation({ className = '', user, resendE
                   <input
                      id="email"
                      type="email"
-                     className="input-custom max-w-lg"
+                     className="input input-bordered max-w-lg"
                      value={data.email}
                      onChange={(e) => setData({ ...data, email: e.target.value })}
                      required
@@ -77,19 +77,19 @@ export default function UpdateProfileInformation({ className = '', user, resendE
 
             {user.email_verified_at === null && (
                <div>
-                  <p className="text-sm mt-2 text-gray-800 dark:text-gray-200">
+                  <p className="mt-2 text-sm text-gray-800 dark:text-gray-200">
                      Your email address is unverified.
                      <button
                         type="button"
                         onClick={() => resendEmailVerification({ setStatus })}
-                        className="btn btn-primary text-white btn-sm ml-2"
+                        className="btn btn-primary btn-sm ml-2 text-white"
                      >
                         Click here to re-send the verification email.
                      </button>
                   </p>
 
                   {status === 'verification-link-sent' && (
-                     <div className="mt-2 font-medium text-sm text-green-600 dark:text-green-400">
+                     <div className="mt-2 text-sm font-medium text-green-600 dark:text-green-400">
                         A new verification link has been sent to your email address.
                      </div>
                   )}

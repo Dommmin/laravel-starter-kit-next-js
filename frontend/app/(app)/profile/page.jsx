@@ -8,11 +8,11 @@ import TwoFactorAuthenticationForm from './partials/TwoFactorAuthenticationForm.
 import { useAuth } from '../../hooks/auth.js';
 import { useTwoFactor } from '../../hooks/two-factor.js';
 import LoadingSpinner from '../../ui/LoadingSpinner';
-// import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export default function Edit() {
    const { disableTwoFactorAuthentication } = useTwoFactor();
-   // const router = useRouter();
+   const router = useRouter();
    const { user, resendEmailVerification, isFetching, refetch } = useAuth({ middleware: 'auth' });
 
    useEffect(() => {
@@ -28,13 +28,13 @@ export default function Edit() {
    }
 
    if (!user) {
-      // return router.push('/login');
+      return router.push('/login');
    }
 
    return (
       <div className="py-12">
-         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+         <div className="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
+            <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
                <UpdateProfileInformationForm
                   className="max-w-xl"
                   user={user}
@@ -43,15 +43,15 @@ export default function Edit() {
                />
             </div>
 
-            <div className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+            <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
                <UpdatePasswordForm className="max-w-xl" />
             </div>
 
-            <div className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+            <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
                <TwoFactorAuthenticationForm className="max-w-xl" user={user} refetchUser={refetch} />
             </div>
 
-            <div className="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+            <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
                <DeleteUserForm className="max-w-xl" />
             </div>
          </div>
