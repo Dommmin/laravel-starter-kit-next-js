@@ -23,6 +23,7 @@ services:
       context: .
       dockerfile: ./frontend/Dockerfile
       target: dev
+    command: sh -c "npm install && npm run dev"
     container_name: ${DOCKER_PREFIX}_frontend
     restart: unless-stopped
     volumes:
